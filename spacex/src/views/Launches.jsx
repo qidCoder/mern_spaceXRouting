@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';//in order call the api
+import {Link} from '@reach/router';//in order to use links
 
 const Launches = props => {
     //we want to get data and then display it. Since the data from the API starts out initially as a JSON file, it will take time for this component to link to the JSON file= it's not instant. SO when the component first loads, we do NOT have any data. To keep track of the data going from no data to some data, we will use state and null. 
@@ -41,7 +42,15 @@ const Launches = props => {
                 launches.map( (one_launch) => {
                     return (
                         <div key={one_launch.flight_number}>
-                            <h1>Launch number {one_launch.flight_number}</h1>
+                            {/* we now want to make this a link we can click on and take us to the specific launch */}
+                            <Link to={'/launches/' + one_launch.flight_number}>
+
+                            {/* OR you can also do it like this with backticks */}
+                            {/* <Link to={`/launches/${one_launch.flight_number}`}></Link> */}
+
+                                <h1>Launch number {one_launch.flight_number}</h1>
+                            </Link>
+                            
                             <h2>Mission Name: {one_launch.mission_name}</h2>
                             <p>Rocket: {one_launch.rocket.rocket_name}</p>
                             <hr/>

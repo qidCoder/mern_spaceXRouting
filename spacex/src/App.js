@@ -23,6 +23,7 @@ function App() {
         <Homepage path='/' />
         <SingleLaunch path='/launches/:id' />
         <Launches path='/launches' />
+        {/* :id is a URL parameter; some id value will be inserted there when the URL is visited and available in props by the same name */}
       </Router>
 
     </div>
