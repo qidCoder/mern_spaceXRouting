@@ -12,8 +12,18 @@ const Launches = props => {
         //we need to request the data - need Axios to make the API call. We are making a GET request
         axios.get("https://api.spacexdata.com/v3/launches")
         //since we don't know how long it is going to take, it's asynchronous and axios will return a promise. The promise says "we will let you know if the data comes back or we will let you know if it takes too long for the data to come back". It's a 'promise' that they will get back to us. We don't need the keyword 'Promise' because it is returned from the axios.get() function and then we can jst directly apply the .then and .catch to it
+            //with asynchronous, you can't just read the code from the top down. It happens out of order
             //if we don't know how long something will take, we will send a callBack function so that we will get notified by the function being executed. .then is a callback function that will give us back a response
-            .then( (res) => {console.log(res); })
+            .then( (res) => {
+                console.log(res); 
+
+                //now that we have the data, we can use it
+                //first we have to set it
+                //the data came back in the response (res) into an array of objects named data
+                setLaunches(res.data)
+                //now the state is no longer null and the div will be returned instead of the gif image
+                //we will map it out below in return
+            })
             .catch( (err) => { console.log(err); })//errors would be if it couldn't get to the server or if it took too long
 
 
@@ -25,7 +35,20 @@ const Launches = props => {
     }
 
     return (
-        <div>Launches View</div>
+        //we now have the data in an array and now will map them onto the page
+        <div>
+            {
+                launches.map( (one_launch) => {
+                    return (
+                        <div key={one_launch.flight_number}>
+                            <h1>Launch number {one_launch.flight_number}</h1>
+                            <h2>Mission Name: {one_launch.mission_name}</h2>
+                            <p>Rocket: {one_launch.rocket.rocket_name}</p>
+                            <hr/>
+                        </div>
+                    )})
+            }
+        </div>
     );
 }
 
